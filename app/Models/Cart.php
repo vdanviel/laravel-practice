@@ -12,4 +12,8 @@ class Cart extends Model
     public $timestamps = false;
     //nome da tabela
     protected $table = 'tb_carts';
+
+    public function scopeByUser($query, $iduser){
+        return $query->where('cart_user', $iduser)->first();
+    }
 }

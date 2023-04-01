@@ -31,14 +31,47 @@ class ProductController extends Controller
         //
     }
 
+    //retorna o array dos produtos do carrinho do user atual a partir dos ids das compras (tb_shoppings)
+    public function cart_products($array){
+
+        //acumulando os dados puras (junto com as informações Models) em $product_obj_data
+        $product_obj_data = array();
+
+        foreach ($array as $key => $value) {
+
+            array_push($product_obj_data, $this->show($array[$key]['shopping_product']));
+
+        }
+
+        /*acumulando somente os dados dos produtos dentro dos 
+        objetos models ($product_obj_data) em $products_array*/
+        $products_array = array();
+
+        foreach ($product_obj_data as $key => $value) {
+
+            array_push($products_array, $product_obj_data[$key][0]->toArray());
+
+        }
+
+        return $products_array;
+
+    }   
+
     /**
      * Display the specified resource.
      */
-    public function show($slug)
-    {
-        $data = Product::where('product_uri', $slug)->get()->toArray();
+    //show all the product by the product id
+    public function show($id){
 
-        return $data;
+        return Product::where('product_id', $id)->get();
+
+    }
+
+    //show the product by the product slug
+    public function slug($slug, Product $product){
+
+        return $product->where('product_uri', $slug)->first()->toArray();
+
     }
 
     /**

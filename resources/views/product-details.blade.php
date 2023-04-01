@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title',$product[0]['product_name'])
+@section('title',$product['product_name'])
 
 @section('content')
 
@@ -15,19 +15,19 @@
             <h1>Informações do Produto</h1>
         </span>
 
-        <img class="m-2 mb-3" style='width:30rem' src="{{$product[0]['product_image']}}" alt="Imagem do produto">
+        <img class="m-2 mb-3" style='width:30rem' src="{{$product['product_image']}}" alt="Imagem do produto">
 
         <div class="col-12">
             <div class="align-items-center">
 
-                <h3>{{$product[0]['product_name']}}</h3>
-                <s class="color-info fs-4">R${{$product[0]['product_price'] * 2}}</s>
-                <b class="fs-3">R${{$product[0]['product_price']}}</b>
+                <h3>{{$product['product_name']}}</h3>
+                <s class="color-info fs-4">R${{$product['product_price'] * 2}}</s>
+                <b class="fs-3">R${{$product['product_price']}}</b>
                 <h5 class="m-2">Descrição:</h5>
                 
                 <span class="d-flex justify-content-center">
                     <p class="p-2 border rounded-3 w-50">
-                        {{$product[0]['product_description']}}
+                        {{$product['product_description']}}
                     </p>
                 </span>
                 

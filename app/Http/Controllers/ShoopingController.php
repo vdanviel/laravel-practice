@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shooping;
+use App\Models\Shopping;
 use Illuminate\Http\Request;
 
 class ShoopingController extends Controller
@@ -12,7 +12,7 @@ class ShoopingController extends Controller
      */
     public function index()
     {
-        //
+        return Shopping::all();
     }
 
     /**
@@ -34,7 +34,7 @@ class ShoopingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Shooping $shooping)
+    public function show(Shopping $shopping)
     {
         //
     }
@@ -42,7 +42,7 @@ class ShoopingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Shooping $shooping)
+    public function edit(Shopping $shopping)
     {
         //
     }
@@ -50,7 +50,7 @@ class ShoopingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Shooping $shooping)
+    public function update(Request $request, Shopping $shopping)
     {
         //
     }
@@ -58,7 +58,7 @@ class ShoopingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Shooping $shooping)
+    public function destroy(Shopping $shopping)
     {
         //
     }

@@ -27,11 +27,12 @@ return new class extends Migration
         Schema::create('tb_carts', function (Blueprint $table){
             $table->id('cart_id');
 
-            #fazendo a foreign key do id user para linkar carrinho c user
+             #fazendo a foreign key do id user para linkar carrinho c user
             $table->unsignedBigInteger('cart_user');
             $table->foreign('cart_user')->references('user_id')->on('tb_users')->onDelete('no action')->onUpdate('no action');
 
             $table->timestamps();
+
         });
 
         #CRIANDO A TABELA DE COMPRAS PELO ARTISAN

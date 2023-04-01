@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Shopping;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -36,7 +37,17 @@ class CartController extends Controller
      */
     public function show(Cart $cart)
     {
-        //
+        //carrinho objeto
+        $cart_obj = $cart->byUser(auth()->user()->user_id);    
+
+        //id do carrinho
+        $idcart = $cart_obj->cart_id;
+    
+        //array das compras do usuario objeto (o registro da compra)
+        $shoopings = Shopping::byCart($idcart);
+
+        return $shoopings->toArray();   
+
     }
 
     /**

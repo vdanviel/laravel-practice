@@ -1,12 +1,14 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\tbUsersController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+
+use App\Models\Cart;
 use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,20 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/login', function () {
-
-    if (auth()->check()) {
-
-        return redirect()->route('profile');
-
-    }else{
-        return view('login');
-    }
-
-})->name('login');
-
-Route::post('/login', [UserController::class, 'login'])->name('auth');
-
+#REGISTER/LOGIN
 Route::get('registre-se', function () {
 
     if (auth()->check()) {
@@ -51,6 +40,21 @@ Route::get('registre-se', function () {
 
 Route::post('registre-se',[UserController::class, 'register']);
 
+Route::get('/login', function () {
+
+    if (auth()->check()) {
+
+        return redirect()->route('profile');
+
+    }else{
+        return view('login');
+    }
+
+})->name('login');
+
+Route::post('/login', [UserController::class, 'login'])->name('auth');
+
+#usuario
 Route::get('/usuario', function(){
 
     if (auth()->check()) {
@@ -65,12 +69,14 @@ Route::get('/usuario', function(){
 
 })->name('profile');
 
+#logout
 Route::get('/logout', function () {
     auth()->logout();
 
     return redirect()->route('home');
 })->name('logout');
 
+#PRODUTOS
 Route::get('/produtos', function () {
 
     if (auth()->check()) {
@@ -89,7 +95,9 @@ Route::get('/produtos/{slug}', function($slug){
 
     if (auth()->check()) {
         //autenticado
-        $product = (new ProductController)->show($slug);
+        $product_controller = app()->make(ProductController::class);
+
+        $product = app()->call([$product_controller, 'slug'],['slug' => $slug]);
 
         return view('product-details',compact('product'));
     }else{
@@ -98,3 +106,26 @@ Route::get('/produtos/{slug}', function($slug){
     }
 
 })->name('product-details');
+
+#CARTS
+Route::get('/carrinhos', function(){
+
+    if (auth()->check()) {
+
+        $cart_controller = app()->make(CartController::class);
+
+        //compras do carrinho do user
+        $shoopings = app()->call([$cart_controller, 'show']);
+
+        $product_controller = app()->make(ProductController::class);
+
+        //produtos comprados
+        $products = app()->call([$product_controller, 'cart_products'],['array' => $shoopings]);
+
+        return view('cart',compact('products'));
+
+    }else{
+        return redirect()->route('login');
+    }
+
+})->name('cart');

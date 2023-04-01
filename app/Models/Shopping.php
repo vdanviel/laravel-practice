@@ -11,4 +11,10 @@ class Shopping extends Model
     protected $table = 'tb_shoppings';
     public $timestamps = false;
 
+
+    public function scopeByCart($query, $idcart){
+
+        return $query->where('shopping_cart', $idcart)->get();
+
+    }
 }
