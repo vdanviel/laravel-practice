@@ -27,7 +27,6 @@ class UserController extends Controller
         return [
             'user_email' => $request->input('email'),
             'user_' => $request->input('password'),
-            'a' => $request->input('password'),
             'password' => $request->input('password'),
         ];
     }
@@ -62,6 +61,11 @@ class UserController extends Controller
             "email" => $userobj->user_email,
             "age" => $user_age_obj->{'0'}->user_age,
             "birthday" => date('d/m/Y', strtotime($userobj->user_birthday)),
+            "state" => $userobj->user_state,
+            "city" => $userobj->user_city,
+            "neighborhood" => $userobj->user_neighborhood,
+            "address_number" => $userobj->user_address_number,
+            "address" => $userobj->user_address
         ];
 
         return $user_data ?? null;
@@ -71,20 +75,20 @@ class UserController extends Controller
 
         //validação dos dados, caso haja erros
         $validate = $this->validate($request,
-        [
-            'name' => 'required',
-            'email' => 'required|email',
-            'birthday' => 'required',
-            'password' => 'required'
-        ],
-        [
-            'name.required' => 'O campo do nome é obrigatório.',
-            'email.required' => 'O campo do e-mail é obrigatório.',
-            'email.email' => 'O e-mail deve ser válido.',
-            'birthday.required' => 'O campo do nascimento é obrigatório.',
-            'password.required' => 'O campo da senha é obrigatório.'
-        ]
-    );
+            [
+                'name' => 'required',
+                'email' => 'required|email',
+                'birthday' => 'required',
+                'password' => 'required'
+            ],
+            [
+                'name.required' => 'O campo do nome é obrigatório.',
+                'email.required' => 'O campo do e-mail é obrigatório.',
+                'email.email' => 'O e-mail deve ser válido.',
+                'birthday.required' => 'O campo do nascimento é obrigatório.',
+                'password.required' => 'O campo da senha é obrigatório.'
+            ]
+        );
 
         try {
 

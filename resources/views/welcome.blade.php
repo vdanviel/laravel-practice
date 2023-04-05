@@ -17,7 +17,7 @@
                 </p>
                 <p>Entre com esse usuário, ou cadatre-se depois:</p>
                 <p class="text-center border rounded-2 p-1 w-1">
-                    Email: feeney.jaquan@example.com<br>
+                    Email: dschimmel@example.net<br>
                     Senha: password
                 </p>
 

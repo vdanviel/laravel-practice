@@ -6,7 +6,7 @@
 
         <div class="container d-flex justify-content-center align-content-center">
 
-            <div class="row d-flex flex-column justify-content-center align-content-center">
+            <div class="row d-flex flex-column justify-content-center align-items-center text-center">
                 
                 <span class="text-center p-0 m-2">
                     @if(session('register_success'))
@@ -23,13 +23,16 @@
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                 </svg>
     
-                <div class="col w-100 p-5 border rounded-3 text-center d-flex flex-column justify-content-center">
+                <div class="col w-75 p-3 border rounded-3 text-center d-flex flex-column justify-content-center">
     
                     <label for="name">Nome:</label>
                     <p id="name" class="fs-4">{{$user['name']}}</p>
     
                     <label for="email">E-mail:</label>
                     <p id="email" class="fs-4">{{$user['email']}}</p>
+
+                    <label for="address">Endereço:</label>
+                    <p id="address" class="fs-5">{{$user['address']}}, {{$user['address_number']}} - {{$user['neighborhood']}} - {{$user['city']}} - {{$user['state']}}</p>
     
                     <label for="age">Idade:</label>
                     <p id="age" class="fs-4 mb-0">

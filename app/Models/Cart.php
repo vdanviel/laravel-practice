@@ -9,9 +9,15 @@ class Cart extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    //public $timestamps = false;
+
+    protected $primaryKey = 'cart_id';
     //nome da tabela
     protected $table = 'tb_carts';
+
+    protected $fillable = [
+        'cart_user',
+    ];
 
     public function scopeByUser($query, $iduser){
         return $query->where('cart_user', $iduser)->first();

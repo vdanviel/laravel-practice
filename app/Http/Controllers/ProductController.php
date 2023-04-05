@@ -32,14 +32,14 @@ class ProductController extends Controller
     }
 
     //retorna o array dos produtos do carrinho do user atual a partir dos ids das compras (tb_shoppings)
-    public function cart_products($array){
+    public function cart_products($shoppings){
 
         //acumulando os dados puras (junto com as informações Models) em $product_obj_data
         $product_obj_data = array();
 
-        foreach ($array as $key => $value) {
+        foreach ($shoppings as $key => $value) {
 
-            array_push($product_obj_data, $this->show($array[$key]['shopping_product']));
+            array_push($product_obj_data, $this->show($shoppings[$key]['shopping_product']));
 
         }
 
@@ -51,6 +51,14 @@ class ProductController extends Controller
 
             array_push($products_array, $product_obj_data[$key][0]->toArray());
 
+        }
+
+        //pra cada registro, irei colocar:
+        //id da compra (shopping_id)
+        //a quantidade de compra (shopping_qnt)
+        foreach ($products_array as $key => $value) {
+            $products_array[$key]['shopping_id'] = $shoppings[$key]['shopping_id'];
+            $products_array[$key]['shopping_qnt'] = $shoppings[$key]['shopping_qnt'];
         }
 
         return $products_array;

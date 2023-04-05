@@ -1,25 +1,15 @@
 <?php
 
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ShoopingController;
 
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -115,17 +105,54 @@ Route::get('/carrinhos', function(){
         $cart_controller = app()->make(CartController::class);
 
         //compras do carrinho do user
-        $shoopings = app()->call([$cart_controller, 'show']);
+        $shoppings = app()->call([$cart_controller, 'show']);
 
         $product_controller = app()->make(ProductController::class);
 
         //produtos comprados
-        $products = app()->call([$product_controller, 'cart_products'],['array' => $shoopings]);
+        $products = app()->call([$product_controller, 'cart_products'],['shoppings' => $shoppings]);
 
-        return view('cart',compact('products'));
+        //somando todos os valores para o preço total e somando a quantidade de produtos comprados
+        $total_price = 0;
+        $total_qnt = 0;
+
+        foreach($products as $key => $product){
+            $total_price += $product['product_price'] * $product['shopping_qnt'];
+            $total_qnt += $product['shopping_qnt'];
+        }
+
+        return view('cart',compact('shoppings','products', 'total_price', 'total_qnt'));
 
     }else{
         return redirect()->route('login');
     }
 
 })->name('cart');
+
+#adicionar um shopping ao carrinho 
+Route::get('/add-cart/{idproduct}', function($idproduct){
+
+    if (auth()->check()) {
+        //logado
+
+        $cart_controller = app()->make(CartController::class);
+
+        //adiciona shopping ao determinado carrinho
+        return $cart_controller->cartaddproduct($idproduct);
+
+
+    }else {
+        //se não logado vai pra o login
+        return redirect()->route('login');
+    }
+
+});
+
+#deletar um shopping do carrinho
+Route::get('/delete-from-cart/{shopping_id}', [CartController::class, 'cartremoveproduct']);
+
+#adicionar uma quantidade ao shopping
+Route::get('/cart/addqnt/{idproduct}', [ShoopingController::class, 'addqnt']);
+
+#retirar uma quantidade ao shopping
+Route::get('/cart/removeqnt/{idproduct}', [ShoopingController::class, 'removeqnt']);
