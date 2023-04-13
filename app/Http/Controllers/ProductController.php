@@ -2,37 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
     }
 
-    //retorna o array dos produtos do carrinho do user atual a partir dos ids das compras (tb_shoppings)
-    public function cart_products($shoppings){
+    //retorna o array dos produtos dos shoppings do usuario atual
+    public function cart_products(){
+
+        //shoppings do usuario
+        $shoppings = (new CartController)->show();
 
         //acumulando os dados puras (junto com as informações Models) em $product_obj_data
         $product_obj_data = array();
@@ -56,18 +52,41 @@ class ProductController extends Controller
         //pra cada registro, irei colocar:
         //id da compra (shopping_id)
         //a quantidade de compra (shopping_qnt)
-        foreach ($products_array as $key => $value) {
+        //o preço TOTAL da compra
+        //a quantidade TOTAL da compra
+
+        $total_price = 0;
+        $total_qnt = 0;
+        foreach ($products_array as $key => $product) {
             $products_array[$key]['shopping_id'] = $shoppings[$key]['shopping_id'];
             $products_array[$key]['shopping_qnt'] = $shoppings[$key]['shopping_qnt'];
+
+            $total_price += $products_array[$key]['product_price'] * $products_array[$key]['shopping_qnt'];
+
+            $total_qnt += $products_array[$key]['shopping_qnt'];
         }
 
-        return $products_array;
+        $total_array = [
+            "total_price" => $total_price,
+            "total_qnt" => $total_qnt
+        ];
+
+        //retorna
+        if (empty($products_array)) {
+            return [];
+        }else{
+
+            return [
+                //produtos do carrinho
+                "products" => $products_array,
+                //preço total, e quantidade de produtos total
+                "totals" => $total_array
+            ];
+
+        }
 
     }   
 
-    /**
-     * Display the specified resource.
-     */
     //show all the product by the product id
     public function show($id){
 
@@ -82,25 +101,16 @@ class ProductController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Product $product)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Product $product)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Product $product)
     {
         //

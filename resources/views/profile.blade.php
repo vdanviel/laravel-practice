@@ -41,7 +41,7 @@
                     </p>
                 </div>
     
-                <span class="text-center p-0">
+                <span class="text-center p-0 mb-5">
                     <a onclick="return confirm('Você realmente deseja sair da aplicação?')" class="btn btn-light mt-3 fs-5" style="width: fit-content" href="/logout"> Sair </a>
                 </span>
                 

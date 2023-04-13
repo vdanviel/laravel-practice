@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tb_carts', function (Blueprint $table) {
-            $table->string('cart_price_total');
-            $table->timestamp('created_at')->change();
+        Schema::create('tb_orders', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('order_status', 20);//status do pedido
+            $table->decimal('order_total_price');
+            $table->string('order_session_id');
+
+            $table->timestamps();
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('new_column_cart');
+        Schema::dropIfExists('tb_orders');
     }
 };

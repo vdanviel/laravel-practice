@@ -11,7 +11,10 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
+
+    //exceções de rotas onde o csrf não será usado.
     protected $except = [
-        //
+        //desativando a rota do webhook..
+        '/stripe/webhook'
     ];
 }

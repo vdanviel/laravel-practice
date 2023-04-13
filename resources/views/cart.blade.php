@@ -16,6 +16,14 @@
                     @endcomponent
                 @endif
 
+                @if (session('success'))
+                    @component('component/alert-success')
+                        @slot('message')
+                            {{session('success')}}
+                        @endslot
+                    @endcomponent
+                @endif
+
                 @if (empty($products))
                     
                     <div class="d-flex p-4 align-items-center flex-column border rounded-3">
@@ -41,11 +49,10 @@
                     </thead>
             
                     <tbody>
-            
-                        @foreach ($products as $product)
+                        @foreach ($products['products'] as $product)
                             <tr class="text-center align-middle">
                                 <th>{{$product['product_id']}}</th>
-                                <td><img style="width: 100px" src="{{$product['product_image']}}" alt="{{$products[0]['product_name']}}"></td>
+                                <td><img style="width: 100px" src="{{$product['product_image']}}" alt="{{$product['product_name']}}"></td>
                                 <td>{{$product['product_name']}}</td>
                                 <td style="text-align: -webkit-center;">
 
@@ -78,6 +85,12 @@
                     </tbody>
                 </table>
 
+                <form action="delete-cart" method="post">
+                    @csrf
+
+                    <input class="btn btn-light" type="submit" value="Deletar carrinho">
+                </form>
+
                 @endif
 
             </div>
@@ -85,9 +98,22 @@
             <div class="col mt-4 d-flex justify-content-center">
 
                 <div class="flex-column text-center">
-                    <p class="border p-3 rounded-3 my-1"><b>Preço Total: </b>R${{number_format($total_price, 2, ',')}}</p>
-                    <p class="border p-3 rounded-3 my-1"><b>Quantidade Total: </b> {{$total_qnt}} produtos.</p>
-                    <a class="btn btn-success mt-4 p-3 fs-4" href="/checkout-payment">Comprar</a>
+
+                    @if(empty($products))
+                        <p class="border p-3 rounded-3 my-1"><b>Preço Total: </b>R$0</p>
+                        <p class="border p-3 rounded-3 my-1"><b>Quantidade Total: </b> 0 produtos.</p>
+                    @else
+                        <p class="border p-3 rounded-3 my-1"><b>Preço Total: </b>R${{number_format($products['totals']['total_price'], 2, ',')}}</p>
+                        <p class="border p-3 rounded-3 my-1"><b>Quantidade Total: </b> {{$products['totals']['total_qnt']}} produtos.</p>
+                    @endif
+
+                    @if(!empty($products))
+                        <form action="/create-checkout-session" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success mt-4 p-3 fs-4">Comprar</button>
+                        </form>
+                    @endif    
+                    
                 </div>
 
             </div>

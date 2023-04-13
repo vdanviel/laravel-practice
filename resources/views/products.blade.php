@@ -4,7 +4,6 @@
     
 @section('content')
 
-    <h1 class="text-center m-2">Esses são os produtos do banco de dados :)</h1>
     <!--name price image -->
       <div class="container text-center" >
         <div class="row justify-content-center text-center">

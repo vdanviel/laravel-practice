@@ -86,6 +86,12 @@ return [
         ],
     ],
 
+    //EMAIL THAT THE APLICCATION WILL USE
+    'from' => [
+        'address' => env('MAIL_FROM_ADDRESS'),
+        'name' => env('MAIL_FROM_NAME'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Global "From" Address

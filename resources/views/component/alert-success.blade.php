@@ -1,3 +1,3 @@
-<div class="alert alert-success" role="alert">
+<div class="alert alert-success my-1" role="alert">
     {{$message}}
 </div>
