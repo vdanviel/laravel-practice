@@ -23,9 +23,3 @@ Some-Practice é um projeto desenvolvido em Laravel e Bootstrap 5, que serve tan
 4. Execute as migrações do banco de dados usando o comando `php artisan migrate`.
 5. Inicie o servidor de desenvolvimento do Laravel com o comando `php artisan serve`.
 6. Acesse a aplicação no navegador usando a URL fornecida pelo servidor de desenvolvimento.
-
-Agora você tem todas as informações necessárias para utilizar o projeto Some-Practice. Divirta-se explorando e aprimorando suas habilidades com o Laravel!
-
-**Observação:** Lembre-se de que o projeto utiliza a página de checkout de teste do Stripe e pode exigir configurações adicionais para ser utilizado em um ambiente de produção.
-
-Caso você precise de mais informações ou tenha alguma dúvida, fique à vontade para perguntar.
